@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.phemethyst.postmortem.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "postmortem.refmap.json",
+  "client": [
+    "PonderSceneAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

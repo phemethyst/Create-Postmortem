@@ -1,0 +1,10 @@
+{
+	"itemGroup.postmortem": "Create: POSTMORTEM",
+
+	"gui.postmortem.postmortem_generator.generating": "Generating rotation",
+	"gui.postmortem.postmortem_kinetic.consuming": "Drawing stress",
+	"gui.postmortem.rpm": "%s RPM",
+	"gui.postmortem.su": "%s SU",
+
+	"display_source.postmortem.postmortem_source": "Kinetic Speed"
+}

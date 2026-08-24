@@ -1,0 +1,28 @@
+{
+	"itemGroup.postmortem": "Beispiel Create-Erweiterung",
+	"itemGroup.postmortem.main_tab": "Hauptreiter",
+
+	"block.postmortem.postmortem_kinetic_block": "Beispiel-Kinetikblock",
+	"block.postmortem.postmortem_generator_block": "Beispiel-Generatorblock",
+
+	"item.postmortem.postmortem_item": "Beispielgegenstand",
+	"item.postmortem.postmortem_result": "Beispielergebnis",
+	"item.postmortem.incomplete_example": "Unvollständiges Beispiel",
+
+	"gui.postmortem.postmortem_generator.generating": "Erzeugt Rotation",
+	"gui.postmortem.postmortem_kinetic.consuming": "Verbraucht Belastung",
+	"gui.postmortem.rpm": "%s UPM",
+	"gui.postmortem.su": "%s SU",
+
+	"display_source.postmortem.postmortem_source": "Kinetische Geschwindigkeit",
+
+	"item.postmortem.postmortem_item.tooltip.summary": "Ein Vorführgegenstand für die _Beispiel-Erweiterung_.",
+	"item.postmortem.postmortem_item.tooltip.condition1": "Wenn gehalten",
+	"item.postmortem.postmortem_item.tooltip.behaviour1": "Zeigt diese Beschreibung – ermöglicht durch Creates _ItemDescription_-Tooltip-System.",
+
+	"postmortem.ponder.postmortem_ponder.header": "Willkommen bei der Beispiel-Erweiterung",
+	"postmortem.ponder.postmortem_ponder.text_1": "Jeder Block hier wird aus postmortem_ponder.nbt geladen",
+	"postmortem.ponder.postmortem_ponder.text_2": "Blockentitäten wie dieses Schild werden dargestellt und ticken wie in der Welt",
+	"postmortem.ponder.postmortem_ponder.text_3": "Zwei mechanische Arme flankieren das Schild und beweisen, dass auch Creates eigene Blöcke funktionieren",
+	"postmortem.ponder.postmortem_ponder.text_4": "Du kannst auch den blöcken rpm werte geben"
+}
