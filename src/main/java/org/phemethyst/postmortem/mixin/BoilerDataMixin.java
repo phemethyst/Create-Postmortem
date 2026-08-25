@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.utility.CreateLang;
 import net.createmod.catnip.animation.LerpedFloat;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -18,6 +19,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import com.simibubi.create.content.fluids.tank.BoilerData;
 import org.spongepowered.asm.mixin.Shadow;
 
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 
@@ -53,6 +55,8 @@ public class BoilerDataMixin  {
     int currentIndex;
     @Shadow
     int gatheredSupply;
+    @Shadow
+    public int attachedWhistles;
 
     @Shadow
     public void calcMinMaxForSize(int boilerSize) {}
@@ -97,10 +101,25 @@ public class BoilerDataMixin  {
         throw new AssertionError();
     }
 
+    @Shadow
+    public int getMaxHeatLevelForBoilerSize(int boilerSize) {
+        throw new AssertionError();
+    }
+
+    @Shadow
+    public int getMaxHeatLevelForWaterSupply() {
+        throw new AssertionError();
+    }
+
+    @Shadow
+    public boolean isPassive(int boilerSize) {
+        throw new AssertionError();
+    }
+
     private int tankSize; // The size of the boiler's tank. Used for calculating maximum pressure.
 
     private static final int maxPressurePerTank = 80000;
-    private static final int pressurePerHeatLevel = 4;
+    private static final int pressurePerHeatLevel = 1;
 
     private int currentPressure; // The current pressure of the boiler.
     private int maxPressure; // The maximum pressure of the boiler.
@@ -227,5 +246,34 @@ public class BoilerDataMixin  {
                 .forGoggles(tooltip, 1);
 
         return true;
+    }
+
+    public CompoundTag write() {
+        CompoundTag nbt = new CompoundTag();
+        nbt.putFloat("Supply", waterSupply);
+        nbt.putInt("ActiveHeat", activeHeat);
+        nbt.putBoolean("PassiveHeat", passiveHeat);
+        nbt.putInt("Engines", attachedEngines);
+        nbt.putInt("Whistles", attachedWhistles);
+        nbt.putBoolean("Update", needsHeatLevelUpdate);
+        nbt.putInt("Pressure", currentPressure);
+        return nbt;
+    }
+
+    public void read(CompoundTag nbt, int boilerSize) {
+        waterSupply = nbt.getFloat("Supply");
+        activeHeat = nbt.getInt("ActiveHeat");
+        passiveHeat = nbt.getBoolean("PassiveHeat");
+        attachedEngines = nbt.getInt("Engines");
+        attachedWhistles = nbt.getInt("Whistles");
+        needsHeatLevelUpdate = nbt.getBoolean("Update");
+        currentPressure = nbt.getInt("Pressure");
+        Arrays.fill(supplyOverTime, (int) waterSupply);
+
+        int forBoilerSize = getMaxHeatLevelForBoilerSize(boilerSize);
+        int forWaterSupply = getMaxHeatLevelForWaterSupply();
+        int actualHeat = Math.min(activeHeat, Math.min(forWaterSupply, forBoilerSize));
+        float target = isPassive(boilerSize) ? 1 / 8f : forBoilerSize == 0 ? 0 : actualHeat / (forBoilerSize * 1f);
+        gauge.chase(target, 0.125f, LerpedFloat.Chaser.EXP);
     }
 }
